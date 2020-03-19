@@ -29,26 +29,16 @@ function findSteps(id) {
     .orderBy("st.step_number");
 }
 
-// .where({ scheme_id: id })
-
-// function findSteps(id) {
-//   return db("steps")
-//     .select("s.id", "s.scheme_name", "st.step_number", "st.instructions")
-//     .from("schemes as s")
-//     .join("steps as st")
-//     .where("s.id", id);
-// }
 
 function add(schemeData) {
   return db("schemes").insert(schemeData);
 }
 
-function addStep(stepData, id) {
-  return (
-    db("steps")
-      // .where({id})
-      .insert(stepData, id)
-  );
+
+// addStep needs work, how do we do it so tht we don't need to add "scheme_id" in body
+function addStep(stepData) {
+  return db("steps")
+    .insert(stepData)
 }
 
 function update(changes, id) {
