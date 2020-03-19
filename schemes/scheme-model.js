@@ -20,17 +20,24 @@ function findById(id) {
     .first();
 }
 
-function findSteps(schemesid) {
+function findSteps(id) {
   return db("steps")
-    .join("steps.scheme_id", "schemes.id")
-    .select(
-      "steps.id",
-      "steps.instructions",
-      "schemes.id as schemesid",
-      "schemes.scheme_name"
-    )
-    .where({ scheme_id: schemes.id });
+    .select('st.id', 's.scheme_name', 'st.step_number', 'st.instructions')
+    .from('schemes as s')
+    .join('steps as st', 'st.scheme_id', '=', 's.id')
+    .where({ scheme_id: id })
+    .orderBy("st.step_number");
 }
+
+// .where({ scheme_id: id })
+
+// function findSteps(id) {
+//   return db("steps")
+//     .select("s.id", "s.scheme_name", "st.step_number", "st.instructions")
+//     .from("schemes as s")
+//     .join("steps as st")
+//     .where("s.id", id);
+// }
 
 function add(schemeData) {
   return db("schemes").insert(schemeData);
